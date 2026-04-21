@@ -80,17 +80,6 @@ nav a:hover {
 }
 
 
-/* VIDEO */
-
-video {
-  width: 100%;
-  max-height: 320px;
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-}
-
-
 /* CONTROLS */
 
 .custom-controls {
@@ -119,18 +108,22 @@ video {
 .progress-bar {
   flex: 1;
   height: 6px;
-  background: #e9dff5;
+  background: #e7e0ef;
   border-radius: 3px;
   cursor: pointer;
   overflow: hidden;
+
+  position: relative; /* 🔥 THIS IS THE FIX */
 }
 
 #progress-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #f472b6, #a78bfa);
+  background: #2f2f3a;
 }
-
 
 /* TEXT SECTIONS */
 
