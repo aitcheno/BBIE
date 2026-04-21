@@ -9,6 +9,7 @@ body {
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   font-weight: 500;
 }
@@ -61,8 +62,9 @@ nav a:hover {
 
 .container {
   flex: 1;
-  max-width: 900px;
-  margin: auto;
+  width: 100%;
+  max-width: 1100px; /* wider than before */
+  margin: 40px auto;
   padding: 20px;
 }
 
@@ -73,13 +75,12 @@ nav a:hover {
   width: 100%;
   background: rgba(255, 255, 255, 0.75);
   border: 1px solid #eadcf5;
-  padding: 18px;
-  border-radius: 16px;
+  padding: 26px; /* slightly bigger breathing room */
+  border-radius: 18px;
   backdrop-filter: blur(12px);
 
-  box-shadow: 0 10px 30px rgba(155, 89, 182, 0.1);
+  box-shadow: 0 10px 30px rgba(155, 89, 182, 0.12);
 }
-
 
 /* AUDIO */
 
@@ -94,11 +95,10 @@ audio {
 .custom-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 14px;
   width: 100%;
 }
-
 
 /* PLAY BUTTON */
 
