@@ -14,3 +14,17 @@ function togglePlayPause() {
     playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
   }
 }
+
+video.addEventListener("timeupdate", () => {
+  const progress = (video.currentTime / video.duration) * 100;
+  progressFill.style.width = progress + "%";
+});
+
+progressBar.addEventListener("click", (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const width = rect.width;
+
+  const newTime = (clickX / width) * video.duration;
+  video.currentTime = newTime;
+});
