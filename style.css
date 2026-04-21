@@ -1,119 +1,36 @@
-:root {
-  --primary-bg-color: #f4f4f4;
-  --text-color: #333;
-  --main-bg-color: #333;
-  --main-text-color: #fff;
-  --main-btn-bg-color: #938989;
-}
-
-body,
-h1,
-p,
-ul {
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: "Arial", sans-serif;
-  background-color: var(--primary-bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  background-color: #0b0f1a;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+  margin: 0;
 }
 
-/* Add additional styles as needed */
-
-/* Create a container for the main content */
+/* Main Background */
 .container {
-  max-width: 1000px;
-  width: 100%;
-  padding: 10px;
+  background-color: #111827;
+  padding: 20px;
 }
 
-/* Header styling */
-header {
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
-  padding: 10px 0;
-  text-align: center;
-  width: 100%;
+/* Headings Styling */
+h1, h2, h3 {
+  color: #e5e7eb;
 }
 
-/* Navigation styling */
-nav {
-  margin-top: 20px;
-  text-align: center;
+/* Paragraph Styling */
+p {
+  color: #9ca3af;
+  line-height: 1.5;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-}
-
-nav ul li {
-  margin-right: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-/* Media player styling */
-.media-player {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.media-player video {
-  max-width: 100%;
-}
-
-.custom-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.custom-controls button {
-  background-color: var(--main-btn-bg-color);
-  color: var(--main-text-color);
+/* Button */
+button {
+  background-color: #7c9cff;
+  color: white;
   border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.progress-bar {
-  position: relative;
-  width: 100%;
-  height: 6px;
-  background: #374151;
+  padding: 10px 15px;
   cursor: pointer;
 }
 
-#progress-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: #60a5fa;
-}
-
-
-/* Footer styling */
-footer {
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
+button:hover {
+  background-color: #60a5fa;
 }
