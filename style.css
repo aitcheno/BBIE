@@ -1,6 +1,6 @@
 body {
   background: linear-gradient(180deg, #fff1f8, #f3e8ff);
-  color: #3f3f46; /* darker for readability */
+  color: #3f3f46;
 
   font-family: Arial, sans-serif;
 
@@ -9,7 +9,8 @@ body {
 
   display: flex;
   flex-direction: column;
-  font-weight: 500; /* slightly bolder base text */
+
+  font-weight: 500;
 }
 
 
@@ -18,14 +19,13 @@ body {
 header {
   text-align: center;
   padding: 20px;
-  opacity: 1;
 }
 
 header h1 {
   font-size: 1.4rem;
   letter-spacing: 1px;
   color: #5b4b7a;
-  font-weight: 700; /* bold title */
+  font-weight: 700;
 }
 
 
@@ -61,22 +61,31 @@ nav a:hover {
 
 .container {
   flex: 1;
-  max-width: 700px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
 }
 
 
-/* MEDIA PLAYER BOX */
+/* MEDIA PLAYER */
 
 .media-player {
-  background: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.75);
   border: 1px solid #eadcf5;
-  padding: 14px;
+  padding: 18px;
   border-radius: 16px;
   backdrop-filter: blur(12px);
 
   box-shadow: 0 10px 30px rgba(155, 89, 182, 0.1);
+}
+
+
+/* AUDIO */
+
+audio {
+  width: 100%;
+  display: none;
 }
 
 
@@ -87,6 +96,7 @@ nav a:hover {
   align-items: center;
   gap: 12px;
   margin-top: 10px;
+  width: 100%;
 }
 
 
@@ -98,8 +108,10 @@ nav a:hover {
   padding: 9px;
   border-radius: 50%;
   cursor: pointer;
-  color: #4b3f63;
-  font-weight: bold;
+}
+
+#play-pause-btn img {
+  display: block;
 }
 
 
@@ -113,30 +125,21 @@ nav a:hover {
   cursor: pointer;
   overflow: hidden;
 
-  position: relative; /* 🔥 THIS IS THE FIX */
+  position: relative;
 }
+
+
+/* PROGRESS BAR FILL */
 
 #progress-bar-fill {
   position: absolute;
   left: 0;
   top: 0;
+
   height: 100%;
   width: 0%;
+
   background: #2f2f3a;
-}
-
-/* TEXT SECTIONS */
-
-section {
-  margin-top: 40px;
-  color: #5b4b7a;
-  font-weight: 500;
-}
-
-section h2 {
-  margin-bottom: 10px;
-  color: #2f2f3a;
-  font-weight: 700;
 }
 
 
@@ -148,10 +151,4 @@ footer {
   font-size: 0.85rem;
   color: #5b4b7a;
   font-weight: 500;
-}
-
-footer a {
-  color: #5b4b7a;
-  text-decoration: none;
-  font-weight: 600;
 }
