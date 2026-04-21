@@ -1,4 +1,6 @@
-// Get elements
+document.querySelector("video")
+
+
 const audio = document.getElementById("custom-audio-player");
 const playBtn = document.getElementById("play-pause-btn");
 const playImg = document.getElementById("play-pause-img");
