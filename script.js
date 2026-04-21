@@ -28,3 +28,19 @@ progressBar.addEventListener("click", (e) => {
   const newTime = (clickX / width) * video.duration;
   video.currentTime = newTime;
 });
+
+const progressHandle = document.getElementById("progress-handle");
+
+// Show and move around while hovering
+progressBar.addEventListener("mousemove", (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+
+  progressHandle.style.left = x + "px";
+  progressHandle.style.opacity = "1";
+});
+
+// Disappear when not hovering
+progressBar.addEventListener("mouseleave", () => {
+  progressHandle.style.opacity = "0";
+});
