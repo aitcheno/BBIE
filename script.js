@@ -14,6 +14,7 @@ function togglePlayPause() {
     playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
   }
 }
+<<<<<<< HEAD
 
 video.addEventListener("timeupdate", () => {
   const progress = (video.currentTime / video.duration) * 100;
@@ -44,3 +45,5 @@ progressBar.addEventListener("mousemove", (e) => {
 progressBar.addEventListener("mouseleave", () => {
   progressHandle.style.opacity = "0";
 });
+=======
+>>>>>>> parent of 8531e2b (progress bar and seek)
