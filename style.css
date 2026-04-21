@@ -114,6 +114,15 @@ audio {
   display: block;
 }
 
+/* ANIMATION FOR PLAY BUTTON */
+#play-pause-btn {
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+#play-pause-btn:hover {
+  transform: scale(1.08);
+  background: #efe1ff;
+}
 
 /* PROGRESS BAR */
 
