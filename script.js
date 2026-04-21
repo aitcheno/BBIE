@@ -7,14 +7,22 @@ const playImg = document.getElementById("play-pause-img");
 const progressFill = document.getElementById("progress-bar-fill");
 const progressBar = document.querySelector(".progress-bar");
 
-// Play / Pause 
-playBtn.addEventListener("click", () => {
-  if (video.paused) {
-    video.play();
-    playImg.src = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
-  } else {
-    video.pause();
-    playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
+// Play / Pause  with debug
+playBtn.addEventListener("click", async () => {
+  console.log("Play button clicked");
+
+  try {
+    if (video.paused) {
+      await video.play();
+      console.log("Video is playing");
+      playImg.src = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
+    } else {
+      video.pause();
+      console.log("Video paused");
+      playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
+    }
+  } catch (err) {
+    console.error("Play failed:", err);
   }
 });
 
