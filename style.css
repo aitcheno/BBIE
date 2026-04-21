@@ -124,6 +124,10 @@ audio {
   background: #efe1ff;
 }
 
+#play-pause-btn:active {
+  transform: scale(0.95);
+}
+
 /* PROGRESS BAR */
 
 .progress-bar {
