@@ -1,3 +1,5 @@
+console.log("JS loaded");
+
 // Get elements
 const video = document.getElementById("custom-video-player");
 const playBtn = document.getElementById("play-pause-btn");
@@ -5,6 +7,9 @@ const playImg = document.getElementById("play-pause-img");
 const progressFill = document.getElementById("progress-bar-fill");
 const progressBar = document.querySelector(".progress-bar");
 
+if (!video || !playBtn || !playImg || !progressFill || !progressBar) {
+  console.error("Missing elements in HTML");
+}
 
 // Play / Pause 
 function togglePlayPause() {
@@ -19,19 +24,16 @@ function togglePlayPause() {
 
 playBtn.addEventListener("click", togglePlayPause);
 
-
 // Progress Bar
 video.addEventListener("timeupdate", () => {
   const progress = (video.currentTime / video.duration) * 100;
   progressFill.style.width = progress + "%";
 });
 
-
 // Seeking
 progressBar.addEventListener("click", (e) => {
   const rect = progressBar.getBoundingClientRect();
   const clickX = e.clientX - rect.left;
 
-  const newTime = (clickX / rect.width) * video.duration;
-  video.currentTime = newTime;
+  video.currentTime = (clickX / rect.width) * video.duration;
 });
