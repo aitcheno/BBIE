@@ -85,24 +85,13 @@ nav a:hover {
 
 .media-player {
   width: 100%;
-  background: rgba(233, 132, 221, 0.55);
+  background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 26px;
   border-radius: 18px;
   backdrop-filter: blur(18px);
 
   box-shadow: 0 10px 30px rgba(155, 89, 182, 0.12);
-
-  animation: pulse 4s ease-in-out infinite;
-  transition: transform 0.3s ease;
-}
-
-
-
-/* AUDIO */
-
-audio {
-  display: none;
 }
 
 
@@ -138,8 +127,26 @@ audio {
   transform: scale(0.95);
 }
 
-#play-pause-btn img {
-  display: block;
+
+/* MUTE BUTTON */
+
+#mute-btn {
+  background: #f5e9ff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+#mute-btn:hover {
+  transform: scale(1.08);
+  background: #efe1ff;
+}
+
+#mute-btn:active {
+  transform: scale(0.95);
 }
 
 
@@ -151,9 +158,8 @@ audio {
   background: #e7e0ef;
   border-radius: 3px;
   cursor: pointer;
-  overflow: hidden;
-
   position: relative;
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -163,7 +169,7 @@ audio {
 }
 
 
-/* PROGRESS BAR FILL */
+/* PROGRESS FILL */
 
 #progress-bar-fill {
   position: absolute;
@@ -174,7 +180,15 @@ audio {
   width: 0%;
 
   background: #2f2f3a;
-  transition: width 0.1s linear;
+}
+
+
+/* VOLUME SLIDER */
+
+#volume-slider {
+  width: 110px;
+  accent-color: #2f2f3a;
+  cursor: pointer;
 }
 
 
