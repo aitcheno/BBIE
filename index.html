@@ -14,12 +14,12 @@
 
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
     <h1>Media Player Website</h1>
   </header>
 
-  <!-- Navigation -->
+  <!-- NAV -->
   <nav>
     <ul>
       <li><a href="#">Home</a></li>
@@ -29,33 +29,48 @@
     </ul>
   </nav>
 
-  <!-- Main Content -->
+  <!-- MAIN CONTAINER -->
   <main class="container">
 
-    <!-- Audio Player -->
+    <!-- MEDIA PLAYER -->
     <div class="media-player">
 
-      <!-- AUDIO ONLY -->
+      <!-- AUDIO -->
       <audio id="custom-audio-player" preload="metadata">
-        <source src="media\ambient-audio.mp3" type="audio/mpeg">
+        <source src="media/ambient-audio.mp3" type="audio/mpeg">
       </audio>
 
-      <!-- Controls -->
+      <!-- CONTROLS -->
       <div class="custom-controls">
 
+        <!-- PLAY BUTTON -->
         <button id="play-pause-btn">
           <img
             id="play-pause-img"
             src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
-            alt="Play/Pause"
             width="24"
             height="24"
           />
         </button>
 
+        <!-- PROGRESS BAR -->
         <div class="progress-bar">
           <div id="progress-bar-fill"></div>
         </div>
+
+        <!-- VOLUME OFF BUTTON -->
+        <button id="mute-btn">
+          <img
+            id="mute-icon"
+            src="assets/no-audio.png"
+            width="22"
+            height="22"
+            alt="Volume"
+          />
+        </button>
+
+        <!-- VOLUME SLIDER -->
+        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1">
 
       </div>
 
@@ -63,7 +78,7 @@
 
   </main>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     <p>© 2024 Media Player Website</p>
   </footer>
