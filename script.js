@@ -7,12 +7,8 @@ const playImg = document.getElementById("play-pause-img");
 const progressFill = document.getElementById("progress-bar-fill");
 const progressBar = document.querySelector(".progress-bar");
 
-if (!video || !playBtn || !playImg || !progressFill || !progressBar) {
-  console.error("Missing elements in HTML");
-}
-
 // Play / Pause 
-function togglePlayPause() {
+playBtn.addEventListener("click", () => {
   if (video.paused) {
     video.play();
     playImg.src = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
@@ -20,9 +16,7 @@ function togglePlayPause() {
     video.pause();
     playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
   }
-}
-
-playBtn.addEventListener("click", togglePlayPause);
+});
 
 // Progress Bar
 video.addEventListener("timeupdate", () => {
