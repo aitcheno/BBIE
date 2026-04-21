@@ -5,6 +5,8 @@ const playImg = document.getElementById("play-pause-img");
 const progressFill = document.getElementById("progress-bar-fill");
 const progressBar = document.querySelector(".progress-bar");
 
+
+// Play / Pause 
 function togglePlayPause() {
   if (video.paused) {
     video.play();
@@ -14,36 +16,22 @@ function togglePlayPause() {
     playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
   }
 }
-<<<<<<< HEAD
 
+playBtn.addEventListener("click", togglePlayPause);
+
+
+// Progress Bar
 video.addEventListener("timeupdate", () => {
   const progress = (video.currentTime / video.duration) * 100;
   progressFill.style.width = progress + "%";
 });
 
+
+// Seeking
 progressBar.addEventListener("click", (e) => {
   const rect = progressBar.getBoundingClientRect();
   const clickX = e.clientX - rect.left;
-  const width = rect.width;
 
-  const newTime = (clickX / width) * video.duration;
+  const newTime = (clickX / rect.width) * video.duration;
   video.currentTime = newTime;
 });
-
-const progressHandle = document.getElementById("progress-handle");
-
-// Show and move around while hovering
-progressBar.addEventListener("mousemove", (e) => {
-  const rect = progressBar.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-
-  progressHandle.style.left = x + "px";
-  progressHandle.style.opacity = "1";
-});
-
-// Disappear when not hovering
-progressBar.addEventListener("mouseleave", () => {
-  progressHandle.style.opacity = "0";
-});
-=======
->>>>>>> parent of 8531e2b (progress bar and seek)
