@@ -191,6 +191,48 @@ nav a:hover {
   cursor: pointer;
 }
 
+/* LOOP BUTTON */
+
+#loop-btn {
+  background: #f5e9ff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  opacity: 0.5; /* lighter when OFF */
+
+  transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+/* LOOP */
+      /* HOVER */
+
+      #loop-btn:hover {
+        transform: scale(1.08);
+        background: #efe1ff;
+        opacity: 0.8;
+      }
+
+
+      /* CLICK ANIMATION */
+
+      #loop-btn:active {
+        transform: scale(0.95);
+      }
+
+
+      /* LOOP ON */
+
+      #loop-btn.active {
+        background: #2f2f3a;
+        opacity: 1; 
+      }
+
+      #loop-btn.active img {
+        filter: invert(1);
+      }
+
 
 /* FOOTER */
 

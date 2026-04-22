@@ -74,3 +74,35 @@ muteBtn.addEventListener("click", () => {
     muteIcon.src = "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
   }
 });
+
+/* LOOP */
+
+#loop-btn {
+  background: #f5e9ff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+#loop-btn:hover {
+  transform: scale(1.08);
+  background: #efe1ff;
+}
+
+#loop-btn:active {
+  transform: scale(0.95);
+}
+
+
+/* LOOP ON */
+
+#loop-btn.active {
+  background: #2f2f3a;
+}
+
+#loop-btn.active img {
+  filter: invert(1);
+}
