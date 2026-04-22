@@ -75,34 +75,15 @@ muteBtn.addEventListener("click", () => {
   }
 });
 
-/* LOOP */
+// LOOP BUTTON
+const loopBtn = document.getElementById("loop-btn");
 
-#loop-btn {
-  background: #f5e9ff;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
+let isLooping = false;
 
-  transition: transform 0.15s ease, background 0.2s ease;
-}
+loopBtn.addEventListener("click", () => {
+  isLooping = !isLooping;
 
-#loop-btn:hover {
-  transform: scale(1.08);
-  background: #efe1ff;
-}
+  audio.loop = isLooping;
 
-#loop-btn:active {
-  transform: scale(0.95);
-}
-
-
-/* LOOP ON */
-
-#loop-btn.active {
-  background: #2f2f3a;
-}
-
-#loop-btn.active img {
-  filter: invert(1);
-}
+  loopBtn.classList.toggle("active", isLooping);
+});

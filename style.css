@@ -205,41 +205,33 @@ nav a:hover {
   transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
-/* LOOP */
-      /* HOVER */
 
-      #loop-btn:hover {
-        transform: scale(1.08);
-        background: #efe1ff;
-        opacity: 0.8;
-      }
+/* HOVER */
 
-
-      /* CLICK ANIMATION */
-
-      #loop-btn:active {
-        transform: scale(0.95);
-      }
+#loop-btn:not(.active):hover {
+  transform: scale(1.08);
+  background: #efe1ff;
+  opacity: 0.8;
+}
 
 
-      /* LOOP ON */
+/* CLICK */
 
-      #loop-btn.active {
-        background: #2f2f3a;
-        opacity: 1; 
-      }
-
-      #loop-btn.active img {
-        filter: invert(1);
-      }
+#loop-btn:active {
+  transform: scale(0.95);
+}
 
 
-/* FOOTER */
+/* LOOP ON */
 
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.85rem;
-  color: #5b4b7a;
-  font-weight: 500;
+#loop-btn.active {
+  background: #2f2f3a;
+  opacity: 1;
+}
+
+
+/* ICON DARK*/
+
+#loop-btn.active img {
+  filter: invert(1);
 }
