@@ -3,94 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Ambient Audio Player</title>
+  <title>Ambient Study Player</title>
 
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
-
   <script src="script.js" defer></script>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>Media Player Website</h1>
-  </header>
+<header>
+  <h1>Ambient Study Player</h1>
+</header>
 
-  <!-- NAV -->
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Music</a></li>
-      <li><a href="#">Playlists</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-  </nav>
+<nav>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Music</a></li>
+    <li><a href="#">Playlists</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+</nav>
 
-  <!-- MAIN CONTAINER -->
-  <main class="container">
+<main class="container">
 
-    <!-- MEDIA PLAYER -->
-    <div class="media-player">
+  <!-- PLAYER -->
+  <div class="media-player">
 
-      <!-- AUDIO -->
-      <audio id="custom-audio-player" preload="metadata">
-        <source src="media/ambient-audio.mp3" type="audio/mpeg">
-      </audio>
+    <div class="track-info">Ambient Mix</div>
 
-      <!-- CONTROLS -->
-      <div class="custom-controls">
+    <audio id="custom-audio-player" preload="metadata">
+      <source src="media/ambient-audio.mp3" type="audio/mpeg">
+    </audio>
 
-        <!-- PLAY BUTTON -->
-        <button id="play-pause-btn">
-          <img
-            id="play-pause-img"
-            src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
-            width="24"
-            height="24"
-          />
-        </button>
+    <div class="custom-controls">
 
-        <!-- PROGRESS BAR -->
-        <div class="progress-bar">
-          <div id="progress-bar-fill"></div>
-        </div>
+      <button id="play-pause-btn">
+        <img id="play-pause-img"
+          src="https://img.icons8.com/ios-glyphs/30/play--v1.png">
+      </button>
 
-        <!-- VOLUME OFF BUTTON -->
-        <button id="mute-btn">
-          <img
-            id="mute-icon"
-            src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png"
-            width="22"
-            height="22"
-          />
-        </button>
-
-        <!-- VOLUME SLIDER -->
-        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1">
-
-        <!-- LOOP BUTTON -->
-        <button id="loop-btn">
-          <img
-            id="loop-icon"
-            src="assets/loop.png"
-            width="22"
-            height="22"
-            alt="Loop"
-          />
-        </button>
+      <div class="progress-bar">
+        <div id="progress-bar-fill"></div>
       </div>
 
+      <button id="mute-btn">
+        <img id="mute-icon"
+          src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+      </button>
+
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01">
+
+      <button id="loop-btn">
+        <img id="loop-icon" src="assets/loop.png">
+      </button>
+
+    </div>
+  </div>
+
+  <!-- MIXER -->
+  <div class="mixer">
+
+    <div class="channel">
+      <input type="range" class="fader" id="rain" min="0" max="100">
+      <button class="mixer-mute" id="rain-mute">
+        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+      </button>
     </div>
 
-  </main>
+    <div class="channel">
+      <input type="range" class="fader" id="thunder" min="0" max="100">
+      <button class="mixer-mute" id="thunder-mute">
+        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+      </button>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2024 Media Player Website</p>
-  </footer>
+    <div class="channel">
+      <input type="range" class="fader" id="brown" min="0" max="100">
+      <button class="mixer-mute" id="brown-mute">
+        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+      </button>
+    </div>
+
+    <div class="channel">
+      <input type="range" class="fader" id="fire" min="0" max="100">
+      <button class="mixer-mute" id="fire-mute">
+        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+      </button>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- 🔥 FIXED AUDIO SOURCES -->
+<audio id="rain-audio" loop>
+  <source src="media/lightrain.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="thunder-audio" loop>
+  <source src="media/thunderstorm.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="brown-audio" loop>
+  <source src="media/brown-noise.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="fire-audio" loop>
+  <source src="media/fire.mp3" type="audio/mpeg">
+</audio>
+
+<footer>
+  <p>© 2024 Media Player Website</p>
+</footer>
 
 </body>
 </html>
