@@ -1,321 +1,337 @@
 /*
-This file is divided up into three main sections:
-1. MAIN PLAYER - controls for the main media player (the ambient track)
-2. MIXER - The soundscape mixing desk (My added feature)
-3. NAV FUNCTIONS + GLOW - scroll tracking that highlights each nav link and adds a glow surrounding it. I wanted to keep the website minimal but not differ from the original code design, so this is how I balanced that
+  CSS DESIGN RATIONALE
+  The visual language is built around a deep purple dark theme with soft pink accents.
+  I chose this pattern for the context of study/relaxation because cool dark backgrounds
+  reduce strain on eyes during long sessions, while the pink highlights provide slight
+  warmth and personality intended to be calming.
+  All colour values are stored as variables on :root so that the entire palette can be
+  adjusted easily in case I change my mind. 
+  The layout uses flexbox throughout. Everything is stacked vertically and centred horizontally
+  The mixer channels are in a flex row to mimic a real mixing desk.
+  Transitions and glow effects give the user feedback from interaction to reinforce their interaction
+  and promote exploration, even though the design is pretty intuitive.
+  I focused on intuitiveness, and simplicity in order to induce a calm mindset within the user i.e. 
+  not having to think too much in their interactions. Have everything be straightforward for the website's
+  interaction.
 */
 
-
-
-
-/* MAIN PLAYER ----- Controls play/pause, progress bar, volume, mute, and loop for the primary ambient track */
-
-
-/*
-My grab references for every element needed by the player
-*/
-const audio        = document.getElementById("custom-audio-player");  // audio element
-const playBtn      = document.getElementById("play-pause-btn");        // play pause button
-const playImg      = document.getElementById("play-pause-img");        // play pause icon
-const progressFill = document.getElementById("progress-bar-fill");     // filled progress bar
-const progressBar  = document.querySelector(".progress-bar");           // progress bar
-const volumeSlider = document.getElementById("volume-slider");         // volume slider
-const muteBtn      = document.getElementById("mute-btn");              // mute button
-const muteIcon     = document.getElementById("mute-icon");             // mute icon
-
-/*
-  "lastVolume" remembers what the volume was before muting it can go back to that level when unmuted
-  We read the slider's starting value (0.8) and apply it to the audio element
-  Reading sliders starting value (0.8) and applying it to the audio element
-  right away so they are in sync before the user changes anything
-*/
-let lastVolume = parseFloat(volumeSlider.value);  // parseFloat converts the "0.8" string to 0.8 number
-audio.volume   = lastVolume;
-
-
-/* PLAY / PAUSE */
-
-/*
-  audio.play() can fail with modern browsers. 
-  Using async and await mitigates this
-  Source: https://developer.chrome.com/blog/autoplay/ 
-*/
-playBtn.addEventListener("click", async () => {
-  if (audio.paused) {
-    // Tries to start playback. Logs a message if blocked. I was having problems in the browser but not the preview so this helped know if something wasn't working
-    await audio.play().catch(err => console.log("Playback blocked:", err));
-
-    // Changes icon visual to pause so user knows its now playing
-    playImg.src = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
-  } else {
-    audio.pause();
-    // Swaps back to the play icon
-    playImg.src = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
-  }
-});
-
-
-/*PROGRESS BAR — AUTO-UPDATING*/
-
-/*
-  "timeupdate" fires as the audio plays. 
-  Math to turn the current time divided by duration into a perentage 
-  Percentage determines the fill width on the bar
-  Auto updates!
-*/
-audio.addEventListener("timeupdate", () => {
-  if (!audio.duration) return;  // bails out if time duration isn't known yet or hasn't loaded. safety measure because you can't divide by zero 
-  const percent = (audio.currentTime / audio.duration) * 100;
-  progressFill.style.width = percent + "%";
-});
-
-
-/*PROGRESS BAR — CLICKING/SEEKING */
-
-/*
-  User clicks on the progress bar, and how far along the bar the click landed 
-  is calculated as a fraction of the bars total width
-
-  getBoundingClientRect() gives bar's position
-  e.clientX is the position of the click 
-  Subtracting rect.left gives the offset from the bar's left edge
-  Dividing by rect.width converts that to a 0–1 fraction
-  Multiplying by audio.duration converts it to a time in seconds
-
-  Really enjoyed the maths behind these
-*/
-progressBar.addEventListener("click", (e) => {
-  const rect     = progressBar.getBoundingClientRect();  // bar's position
-
-  const fraction = (e.clientX - rect.left) / rect.width; // 0.0 at very left, 1.0 at very right
-  audio.currentTime = fraction * audio.duration;          // Seeks to the clicked point
-});
-
-
-/* VOLUME SLIDER */
-
-/*
-  Input fires continuously as the slider is being moved wheras using change would only fire once releasing left click
-  Updates volume keeping lastVolume in sync so mute/unmute works
-  Made it so when the volume is all the way down, the icon swaps to the muted one
-*/
-volumeSlider.addEventListener("input", () => {
-  audio.volume = parseFloat(volumeSlider.value);  // slider value is a string so changing
-
-  if (audio.volume > 0) {
-    lastVolume = audio.volume;  // lastVolume memorising level for when muted
-    muteIcon.src = "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
-  } else {
-    muteIcon.src = "assets/no-audio.png";  // Shows muted icon when volume is down all the way. Have my local file as backup
-  }
-});
-
-
-/*MUTE BUTTON*/
-
-/*
-Mute button works as a toggle:
-- If currently unmuted, set it to 0, save the lastVolume, and change to muted icon
-- If currently muted, restore the lastVolume or turn on if it's undefined, change to unmuted icon
-
-Updating volumeSlider.value manually so the slider position stays in sync with the real audio volume. It wouldn't be in sync if only the audio.volume changed
-*/
-muteBtn.addEventListener("click", () => {
-  if (audio.volume > 0) {
-    lastVolume = audio.volume;       // save lastVolume before muting
-    audio.volume = 0;
-    volumeSlider.value = 0;          // Move slider to the left
-    muteIcon.src = "assets/no-audio.png";
-  } else {
-    audio.volume = lastVolume || 1;  // restores and turns on if it is undefined
-    volumeSlider.value = audio.volume;
-    muteIcon.src = "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
-  }
-});
-
-
-/*LOOP BUTTON*/
-
-/*
-  Toggling audio.loop with !audio.loop flips audio.loop with each click. Turning looping on and off
-  classList.toggle("active", audio.loop) adds the class if loop is on
-  and removes it if loop is off
-*/
-const loopBtn = document.getElementById("loop-btn");
-
-loopBtn.addEventListener("click", () => {
-  audio.loop = !audio.loop;                               // Flips the loop state
-  loopBtn.classList.toggle("active", audio.loop);        // reflects state in CSS
-});
-
-
-/* SECTION 2 — SOUNDSCAPE MIXER  (My extra interactive feature)
-   The study/relaxation context was the motivation for adding this
-   feature. I chose the sounds of common calming sounds I found myself on similar mixer apps.
-  A mixer lets each user personalise their soundscape rather than just having the unchangeable ambient track.
-  There is a broader appeal for users due to the customisation
-
-   Each of the four channels (Rain, Thunder, Brown noise, Fire) has:
-  - A vertical fader controlling volume 0–100
-  - A mute/unmute button that stores and restores the previous volume just like the media player
-  - Smart play/pause logic: tracks only play when their volume is greater than 0 which saves resources making the players run more smoothly
-*/
-
-/*
-  Grabs the audio elements. Loop is already set in html
-*/
-const rain    = document.getElementById("rain-audio");
-const thunder = document.getElementById("thunder-audio");
-const brown   = document.getElementById("brown-audio");
-const fire    = document.getElementById("fire-audio");
-
-/*
-  All volumes set to zero to start with so nothing plays to start which would be pretty irritating
-*/
-rain.volume = thunder.volume = brown.volume = fire.volume = 0;
-
-
-/* OTHER FUNCTIONS */
-
-/*
-  startIfNeeded: only calls .play() if the track is currently paused. There'd be an error if play was called when it was already playing
-*/
-function startIfNeeded(audioEl) {
-  if (audioEl.paused) {
-    audioEl.play().catch(err => console.log("Playback blocked:", err));
-  }
+/* DESIGN TOKENS
+:root {
+  --bg:        #1b1b24;   /* page background - deep purple*/
+  --surface:   #252531;   /* card surface - slightly lighter than bg*/
+  --player-bg: #e8c4d8;   /* main player - warm pink for contrast  */
+  --accent:    #46132e;   /* dark red used for text/fills on the light player  */
+  --text-main: #f0eaf5;   /* primary text  near-white with slight purple  */
+  --text-muted:#b8afc8;   /* secondary text  muted purple   */
 }
 
-/*
-  pauseIfSilent: pauses track when it's muted to save resources
-*/
-function pauseIfSilent(audioEl) {
-  if (audioEl.volume === 0 && !audioEl.paused) {
-    audioEl.pause();
-  }
+/* BASE / BODY 
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* clean, neutral sans-serif; no import needed */
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-/* ── setupChannel — REUSABLE CHANNEL LOGIC*/
-
-/*
-  Using the DRY principle, I found a way to make the code shorter here
-
-  Rather than writing separate event listeners for every channel, I used a function that accepts audio element, slider and mute button as arguments
-
-  audioEl is the <audio> element for the channel
-  slider is the input type="range"> fader for the channel
-  muteBtn is the mute button for the channel
-*/
-
-function setupChannel(audioEl, slider, muteBtn) {
-  // Find the image inside the mute button so the icon can be swapped
-  const icon = muteBtn.querySelector("img");
-
-  /* FADER INPUT
-    Same concept for real time volume control as on the media player BUT
-    HTMLMediaElement.volume expects 0.0-1.0 range instead of 0-100 so it is divided by 100*/
-  slider.addEventListener("input", () => {
-    audioEl.volume = slider.value / 100;  // convert 0–100 to 0-1
-
-    if (audioEl.volume > 0) {
-      // Volume on, make sure volume on icon is shown and track is running
-      icon.src = "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
-      startIfNeeded(audioEl);
-    } else {
-      // Volume is zero, show mute icon and turn off the track
-      icon.src = "assets/no-audio.png";
-      pauseIfSilent(audioEl);
-    }
-  });
-
-  /* MUTE BUTTON
-     Toggle, muting if on and restoring to volume it was at, if muted
-     Value is put onto the audio element itself so I don't have to write it out for each channel: DRY principle
-     If no lastVolume is saved, it defaults to half volume so it's semsibly not too loud but also obviously on */
-  muteBtn.addEventListener("click", () => {
-    if (audioEl.volume > 0) {
-      // If Volume is greater than 0, mute it
-      audioEl.dataset.lastVolume = audioEl.volume;  // Saves current level
-      audioEl.volume = 0;
-      slider.value   = 0;                           // Moves the slider to 0
-      icon.src = "assets/no-audio.png";             // Changes icon
-      pauseIfSilent(audioEl);                       // Turns off audio to save resources
-    } else {
-      // If muted, restore to saved volume
-      const restore = parseFloat(audioEl.dataset.lastVolume) || 0.5; // Default to 50% if nothing saved
-      audioEl.volume = restore;
-      slider.value   = restore * 100;               // Converts back to 0-100
-      icon.src = "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
-      startIfNeeded(audioEl);                       // Resumes playing
-    }
-  });
+/* HEADER - Centred title with a serif italic typeface to evoke a calm mood */
+header {
+  text-align: center;
+  padding: 32px 20px 12px;
 }
 
-
-/*
-  Runs setupChannel once for each of the tracks, passing in the
-  audio element, fader, and mute button that belong to that channel.
-*/
-setupChannel(rain,    document.getElementById("rain"),    document.getElementById("rain-mute"));
-setupChannel(thunder, document.getElementById("thunder"), document.getElementById("thunder-mute"));
-setupChannel(brown,   document.getElementById("brown"),   document.getElementById("brown-mute"));
-setupChannel(fire,    document.getElementById("fire"),    document.getElementById("fire-mute"));
-
-
-/* SECTION 3 — NAV ACTIVE STATE + SECTION GLOW 
-When clicking on navs making them glow and the sections being referred to glow */
-/*
-  Grabs all nav links and the four sections they point to
-  In the same order so index 0 = Home, 1 = Player, etc.
-*/
-const navLinks = document.querySelectorAll("nav a");
-const sections = [
-  document.getElementById("home"),
-  document.getElementById("player"),
-  document.getElementById("mixer"),
-  document.getElementById("about")
-];
-
-/*
-  When called with its index number, the function:
-  - Removes "active" from all nav links then adds it to the right one
-  - Removes "section-active" from all sections then adds it to the right one
-  Home is skipped because it's not a card like the rest
-*/
-function setActiveLink(index) {
-  navLinks.forEach(l => l.classList.remove("active"));
-  if (navLinks[index]) navLinks[index].classList.add("active");
-
-  sections.forEach(s => { if (s) s.classList.remove("section-active"); });
-  if (sections[index]) sections[index].classList.add("section-active");
+header h1 {
+  font-family: Georgia, 'Times New Roman', serif; /* editorial serif; warm, refined feel */
+  font-style: italic;
+  font-size: 2.8rem;
+  color: #f5d0e6;
+  font-weight: 400;
+  letter-spacing: -0.5px;
 }
 
-/*
-  Clicking a nav link highlights it 
-*/
-navLinks.forEach((link, i) => {
-  link.addEventListener("click", () => setActiveLink(i));
-});
+/* NAV - Pill shaped glow when active. Really happy with this. So sleek! */
 
-/*
-  IntersectionObserver watches the sections and fires when one becomes visible.
-  threshold 0.4 means 40% of the section must be on screen before it triggers 
-  which is cool you're able to do. This stops it from flickering when two sections are near the edge at once.
-  Source: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
-*/
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const index = sections.indexOf(entry.target);  // find which section
-      if (index !== -1) setActiveLink(index);        // add the glow
-    }
-  });
-}, { threshold: 0.4 });
+nav {
+  margin-bottom: 28px;
+}
 
-sections.forEach(section => { if (section) observer.observe(section); });
+nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
 
-// Automatically highlighting home as default when opening the website
-setActiveLink(0);
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s, text-shadow 0.2s, box-shadow 0.2s;
+}
 
-// I do realise that the website is small enough for one screen so scrolling isn't really a thing but when the window is adjusted all of this works
+nav a:hover {
+  color: #f5d0e6;
+}
+
+nav a.active {
+  color: #f5d0e6;
+  border-color: rgba(245, 208, 230, 0.4);
+  text-shadow: 0 0 10px rgba(245, 208, 230, 0.6), 0 0 20px rgba(245, 208, 230, 0.3);
+  box-shadow: 0 0 8px rgba(245, 208, 230, 0.2), inset 0 0 8px rgba(245, 208, 230, 0.05);
+}
+
+/* CONTAINER - determining width and gap between cards*/
+.container {
+  width: 100%;
+  max-width: 880px;
+  padding: 0 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* SECTION GLOW ACTIVE Glow around cards when nav chosen. Made the media player glow more exaggerated just because it's a lighter colour and wasn't as obvious when it was on */
+.media-player,
+.mixer,
+.about {
+  transition: box-shadow 0.4s ease;
+}
+
+.section-active {
+  box-shadow: 0 0 0 1px rgba(245, 208, 230, 0.25), 0 0 24px rgba(245, 208, 230, 0.1);
+}
+
+.media-player.section-active {
+  box-shadow: 0 0 0 2px rgba(245, 208, 230, 0.6), 0 0 40px rgba(245, 208, 230, 0.4), 0 0 80px rgba(245, 208, 230, 0.2);
+}
+
+/* MAIN PLAYER CARD */
+.media-player {
+  background: var(--player-bg);
+  padding: 24px 28px;
+  border-radius: 22px;
+  color: var(--accent);
+}
+
+.track-info {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  color: rgba(70, 19, 46, 0.85);
+}
+
+/* MEDIA PLAYER CONTROLS */
+.custom-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Dark fill to contrast the light, making it visible*/
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(70, 19, 46, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.1s linear; /* smoothens */
+}
+
+/* Circular buttons for the icons*/
+#play-pause-btn,
+#mute-btn,
+#loop-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+#play-pause-btn:hover,
+#mute-btn:hover,
+#loop-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Changes colour when on to make it more obvious being on and off rather than changing its icon*/
+#loop-btn.active {
+  background: #d4a0bc;
+}
+
+#volume-slider {
+  width: 80px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* MIXER CARD */
+.mixer {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.mixer-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* In a row. All aligned */
+.mixer-channels {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Each channel is in a column with each needed button vertically. Originally had mute buttons on the side and I found this to be a better, more symmetrical look */
+.channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 76px;
+  gap: 10px;
+}
+
+.channel-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* VERTICAL FADERS
+   So here the horizontal range input is rotated -90 degrees inside a wrap with a fixed height. Was easiest to do it this way. I wanted them vertical to differentiate from the main media player*/
+.fader-wrap {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fader {
+  width: 130px;               /* width is now height FYI */
+  transform: rotate(-90deg);  
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Custom track 
+resource: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-webkit-slider-runnable-track*/
+.fader::-webkit-slider-runnable-track {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+/* Custom thumb 
+Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-webkit-slider-thumb */
+.fader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 30px;
+  background: #d4a0bc;
+  border-radius: 5px;
+  margin-top: -8px;         /* centres the thumb perfectly */
+  transition: background 0.15s;
+}
+
+.fader:hover::-webkit-slider-thumb {
+  background: #f5d0e6; /* brightens on hover */
+}
+
+/* Website warned it's not standardised so just in case you are on Firefox  
+Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-moz-range-track */
+.fader::-moz-range-track {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+/* Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-moz-range-thumb */
+.fader::-moz-range-thumb {
+  width: 20px;
+  height: 30px;
+  background: #d4a0bc;
+  border-radius: 5px;
+  border: none;
+}
+
+/* MIXER MUTE BUTTONS - Mute buttons for each fader. Icon swaps via JS on toggle. */
+.mixer-mute {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.mixer-mute:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.mixer-mute img {
+  width: 20px;
+  height: 20px;
+}
+
+/* ABOUT SECTION - Styled similar to the title for continuity*/
+.about {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+  color: #f5d0e6;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: normal;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* FOOTER */
+footer {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 20px;
+  text-align: center;
+}
+
+/* RESPONSIVE Resource: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using
+On small screens, scale down the heading and shorten the sliders so nothing overflows */
+@media (max-width: 520px) {
+  header h1     { font-size: 2rem; }
+  .fader        { width: 110px; }
+  #volume-slider{ width: 55px; }
+}

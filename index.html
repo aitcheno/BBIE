@@ -1,116 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <!--
+    STRUCTURE & DESIGN RATIONALE
+    The page is built around a single column vertically stacked, ordered to create
+    a hierachy for the user. The interface is narrow and focused in order to reduce
+    visual noise and to relax the user. Very simple structure to have the website be 
+    as intuitive as possible so the user can relax.
+
+    All audio elements are in the HTML so the browser can start preloading them immediately 
+
+Reference for below: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport. This makes sure scaling works across devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ambient Study Player</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <!-- "defer" makes sure the script runs after the DOM is fully read -->
   <script src="script.js" defer></script>
 </head>
 <body>
 
-<header id="home">
-  <h1>Ambient Study Player</h1>
-</header>
+  <header id="home">
+    <h1>Ambient Study Player</h1>
+  </header>
 
-<nav>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#player">Music</a></li>
-    <li><a href="#mixer">Mixer</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
-</nav>
+  <!-- NAV: -->
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#player">Music</a></li>
+      <li><a href="#mixer">Mixer</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
 
-<main class="container">
+  <main class="container">
 
-  <!-- PLAYER -->
-  <div class="media-player" id="player">
-    <div class="track-info">Ambient Mix</div>
-    <audio id="custom-audio-player" preload="metadata">
-      <source src="media/ambient-audio.mp3" type="audio/mpeg">
-    </audio>
-    <div class="custom-controls">
-      <button id="play-pause-btn">
-        <img id="play-pause-img" src="https://img.icons8.com/ios-glyphs/30/play--v1.png" alt="Play">
-      </button>
-      <div class="progress-bar">
-        <div id="progress-bar-fill"></div>
+    <!--PLAYER SECTION-->
+    <div class="media-player" id="player">
+      <div class="track-info">Ambient Mix</div>
+
+      <!-- preload="metadata" loads just enough of the file to know its duration before whole track is loaded. Helps with my js progress bar -->
+      <audio id="custom-audio-player" preload="metadata">
+        <source src="media/ambient-audio.mp3" type="audio/mpeg">
+      </audio>
+
+      <div class="custom-controls">
+        <!-- Play / Pause -->
+        <button id="play-pause-btn">
+          <img id="play-pause-img" src="https://img.icons8.com/ios-glyphs/30/play--v1.png" alt="Play">
+        </button>
+
+        <!-- Progress bar -->
+        <div class="progress-bar">
+          <div id="progress-bar-fill"></div>
+        </div>
+
+        <!-- Mute toggle -->
+        <button id="mute-btn">
+          <img id="mute-icon" src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png" alt="Mute">
+        </button>
+
+        <!-- Volume slider -->
+        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
+
+        <!-- Loop -->
+        <button id="loop-btn">
+          <img id="loop-icon" src="assets/loop.png" alt="Loop">
+        </button>
       </div>
-      <button id="mute-btn">
-        <img id="mute-icon" src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png" alt="Mute">
-      </button>
-      <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
-      <button id="loop-btn">
-        <img id="loop-icon" src="assets/loop.png" alt="Loop">
-      </button>
     </div>
-  </div>
 
-  <!-- MIXER -->
-  <div class="mixer" id="mixer">
-    <p class="mixer-title">Soundscape Mixer</p>
-    <div class="mixer-channels">
+    <!-- MIXER SECTION-->
+    <div class="mixer" id="mixer">
+      <p class="mixer-title">Soundscape Mixer</p>
+      <div class="mixer-channels">
 
-      <div class="channel">
-        <span class="channel-label">Rain</span>
-        <div class="fader-wrap">
-          <input type="range" class="fader" id="rain" min="0" max="100" value="0">
+        <div class="channel">
+          <span class="channel-label">Rain</span>
+          <div class="fader-wrap">
+            <input type="range" class="fader" id="rain" min="0" max="100" value="0">
+          </div>
+          <button class="mixer-mute" id="rain-mute">
+            <img src="assets/no-audio.png" alt="Mute">
+          </button>
         </div>
-        <button class="mixer-mute" id="rain-mute">
-          <img src="assets/no-audio.png" alt="Mute">
-        </button>
-      </div>
 
-      <div class="channel">
-        <span class="channel-label">Thunder</span>
-        <div class="fader-wrap">
-          <input type="range" class="fader" id="thunder" min="0" max="100" value="0">
+        <div class="channel">
+          <span class="channel-label">Thunder</span>
+          <div class="fader-wrap">
+            <input type="range" class="fader" id="thunder" min="0" max="100" value="0">
+          </div>
+          <button class="mixer-mute" id="thunder-mute">
+            <img src="assets/no-audio.png" alt="Mute">
+          </button>
         </div>
-        <button class="mixer-mute" id="thunder-mute">
-          <img src="assets/no-audio.png" alt="Mute">
-        </button>
-      </div>
 
-      <div class="channel">
-        <span class="channel-label">Brown noise</span>
-        <div class="fader-wrap">
-          <input type="range" class="fader" id="brown" min="0" max="100" value="0">
+        <div class="channel">
+          <span class="channel-label">Brown noise</span>
+          <div class="fader-wrap">
+            <input type="range" class="fader" id="brown" min="0" max="100" value="0">
+          </div>
+          <button class="mixer-mute" id="brown-mute">
+            <img src="assets/no-audio.png" alt="Mute">
+          </button>
         </div>
-        <button class="mixer-mute" id="brown-mute">
-          <img src="assets/no-audio.png" alt="Mute">
-        </button>
-      </div>
 
-      <div class="channel">
-        <span class="channel-label">Fire</span>
-        <div class="fader-wrap">
-          <input type="range" class="fader" id="fire" min="0" max="100" value="0">
+        <div class="channel">
+          <span class="channel-label">Fire</span>
+          <div class="fader-wrap">
+            <input type="range" class="fader" id="fire" min="0" max="100" value="0">
+          </div>
+          <button class="mixer-mute" id="fire-mute">
+            <img src="assets/no-audio.png" alt="Mute">
+          </button>
         </div>
-        <button class="mixer-mute" id="fire-mute">
-          <img src="assets/no-audio.png" alt="Mute">
-        </button>
-      </div>
 
+      </div>
     </div>
-  </div>
 
-  <!-- ABOUT -->
-  <div class="about" id="about">
-    <p>Find your study flow; layer ambient soundscapes to support deep focus. Let our ambient mix carry you through.</p>
-  </div>
+    <!-- ABOUT -->
+    <div class="about" id="about">
+      <p>Find your study flow; layer ambient soundscapes to support deep focus. Let our ambient mix carry you through.</p>
+    </div>
 
-</main>
+  </main>
 
-<audio id="rain-audio" loop><source src="media/lightrain.mp3" type="audio/mpeg"></audio>
-<audio id="thunder-audio" loop><source src="media/thunderstorm.mp3" type="audio/mpeg"></audio>
-<audio id="brown-audio" loop><source src="media/brown-noise.mp3" type="audio/mpeg"></audio>
-<audio id="fire-audio" loop><source src="media/fire.mp3" type="audio/mpeg"></audio>
+  <!-- Mixer audio elements: WITH LOOP already in html because I don't want it to be adjustable-->
+  <audio id="rain-audio"    loop><source src="media/lightrain.mp3"     type="audio/mpeg"></audio>
+  <audio id="thunder-audio" loop><source src="media/thunderstorm.mp3"  type="audio/mpeg"></audio>
+  <audio id="brown-audio"   loop><source src="media/brown-noise.mp3"   type="audio/mpeg"></audio>
+  <audio id="fire-audio"    loop><source src="media/fire.mp3"          type="audio/mpeg"></audio>
 
-<footer>
-  <p>© 2026 Ambient Study Player</p>
-</footer>
+  <footer>
+    <p>© 2026 Ambient Study Player</p>
+  </footer>
 
 </body>
-</html>>
+</html>
+
+<!-- Sounds acquired from. Royalty Free https://library-prosoundeffects-com.ap1.proxy.openathens.net/tracks?genre%5B%5D=285867 -->
