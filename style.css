@@ -1,22 +1,35 @@
-html {
-  scroll-behavior: smooth;
-}
+/*
+  CSS DESIGN RATIONALE
+  The visual language is built around a deep purple dark theme with soft pink accents.
+  I chose this pattern for the context of study/relaxation because cool dark backgrounds
+  reduce strain on eyes during long sessions, while the pink highlights provide slight
+  warmth and personality intended to be calming.
+  All colour values are stored as variables on :root so that the entire palette can be
+  adjusted easily in case I change my mind. 
+  The layout uses flexbox throughout. Everything is stacked vertically and centred horizontally
+  The mixer channels are in a flex row to mimic a real mixing desk.
+  Transitions and glow effects give the user feedback from interaction to reinforce their interaction
+  and promote exploration, even though the design is pretty intuitive.
+  I focused on intuitiveness, and simplicity in order to induce a calm mindset within the user i.e. 
+  not having to think too much in their interactions. Have everything be straightforward for the website's
+  interaction.
+*/
 
-/* ROOT */
+/* DESIGN TOKENS */
 :root {
-  --bg:        #1b1b24;
-  --surface:   #252531;
-  --player-bg: #e8c4d8;
-  --accent:    #46132e;
-  --text-main: #f0eaf5;
-  --text-muted:#b8afc8;
+  --bg:        #1b1b24;   /* page background - deep purple*/
+  --surface:   #252531;   /* card surface - slightly lighter than bg*/
+  --player-bg: #e8c4d8;   /* main player - warm pink for contrast  */
+  --accent:    #46132e;   /* dark red used for text/fills on the light player  */
+  --text-main: #f0eaf5;   /* primary text  near-white with slight purple  */
+  --text-muted:#b8afc8;   /* secondary text  muted purple   */
 }
 
-/* BASE */
+/* BODY */
 body {
   background: var(--bg);
   color: var(--text-main);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* clean, neutral sans-serif; no import needed */
   font-weight: 300;
   min-height: 100vh;
   display: flex;
@@ -24,14 +37,14 @@ body {
   align-items: center;
 }
 
-/* HEADER */
+/* HEADER - Centred title with a serif italic typeface to evoke a calm mood */
 header {
   text-align: center;
   padding: 32px 20px 12px;
 }
 
 header h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: Georgia, 'Times New Roman', serif; /* editorial serif; warm, refined feel */
   font-style: italic;
   font-size: 2.8rem;
   color: #f5d0e6;
@@ -39,7 +52,8 @@ header h1 {
   letter-spacing: -0.5px;
 }
 
-/* NAV */
+/* NAV - Pill shaped glow when active. Really happy with this. So sleek! */
+
 nav {
   margin-bottom: 28px;
 }
@@ -72,7 +86,7 @@ nav a.active {
   box-shadow: 0 0 8px rgba(245, 208, 230, 0.2), inset 0 0 8px rgba(245, 208, 230, 0.05);
 }
 
-/* CONTAINER */
+/* CONTAINER - determining width and gap between cards*/
 .container {
   width: 100%;
   max-width: 880px;
@@ -82,7 +96,7 @@ nav a.active {
   gap: 24px;
 }
 
-/* SECTION GLOW */
+/* SECTION GLOW ACTIVE Glow around cards when nav chosen. Made the media player glow more exaggerated just because it's a lighter colour and wasn't as obvious when it was on */
 .media-player,
 .mixer,
 .about {
@@ -97,7 +111,7 @@ nav a.active {
   box-shadow: 0 0 0 2px rgba(245, 208, 230, 0.6), 0 0 40px rgba(245, 208, 230, 0.4), 0 0 80px rgba(245, 208, 230, 0.2);
 }
 
-/* PLAYER */
+/* MAIN PLAYER CARD */
 .media-player {
   background: var(--player-bg);
   padding: 24px 28px;
@@ -114,13 +128,14 @@ nav a.active {
   color: rgba(70, 19, 46, 0.85);
 }
 
-/* CONTROLS */
+/* MEDIA PLAYER CONTROLS */
 .custom-controls {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
+/* Dark fill to contrast the light, making it visible*/
 .progress-bar {
   flex: 1;
   height: 6px;
@@ -134,9 +149,10 @@ nav a.active {
   width: 0%;
   background: var(--accent);
   border-radius: 3px;
-  transition: width 0.1s linear;
+  transition: width 0.1s linear; /* smoothens */
 }
 
+/* Circular buttons for the icons*/
 #play-pause-btn,
 #mute-btn,
 #loop-btn {
@@ -155,6 +171,7 @@ nav a.active {
   background: rgba(255, 255, 255, 0.95);
 }
 
+/* Changes colour when on to make it more obvious being on and off rather than changing its icon*/
 #loop-btn.active {
   background: #d4a0bc;
 }
@@ -165,7 +182,7 @@ nav a.active {
   cursor: pointer;
 }
 
-/* MIXER */
+/* MIXER CARD */
 .mixer {
   background: var(--surface);
   border-radius: 18px;
@@ -181,6 +198,7 @@ nav a.active {
   text-align: center;
 }
 
+/* In a row. All aligned */
 .mixer-channels {
   display: flex;
   justify-content: space-evenly;
@@ -188,6 +206,7 @@ nav a.active {
   gap: 8px;
 }
 
+/* Each channel is in a column with each needed button vertically. Originally had mute buttons on the side and I found this to be a better, more symmetrical look */
 .channel {
   display: flex;
   flex-direction: column;
@@ -204,6 +223,8 @@ nav a.active {
   text-align: center;
 }
 
+/* VERTICAL FADERS
+   So here the horizontal range input is rotated -90 degrees inside a wrap with a fixed height. Was easiest to do it this way. I wanted them vertical to differentiate from the main media player*/
 .fader-wrap {
   height: 140px;
   display: flex;
@@ -212,40 +233,47 @@ nav a.active {
 }
 
 .fader {
-  width: 130px;
-  transform: rotate(-90deg);
+  width: 130px;               /* width is now height FYI */
+  transform: rotate(-90deg);  
   appearance: none;
   -webkit-appearance: none;
   background: transparent;
   cursor: pointer;
 }
 
+/* Custom track 
+resource: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-webkit-slider-runnable-track*/
 .fader::-webkit-slider-runnable-track {
   height: 14px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
 }
 
+/* Custom thumb 
+Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-webkit-slider-thumb */
 .fader::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 20px;
   height: 30px;
   background: #d4a0bc;
   border-radius: 5px;
-  margin-top: -8px;
+  margin-top: -8px;         /* centres the thumb perfectly */
   transition: background 0.15s;
 }
 
 .fader:hover::-webkit-slider-thumb {
-  background: #f5d0e6;
+  background: #f5d0e6; /* brightens on hover */
 }
 
+/* Website warned it's not standardised so just in case you are on Firefox  
+Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-moz-range-track */
 .fader::-moz-range-track {
   height: 14px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
 }
 
+/* Resource https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::-moz-range-thumb */
 .fader::-moz-range-thumb {
   width: 20px;
   height: 30px;
@@ -254,6 +282,7 @@ nav a.active {
   border: none;
 }
 
+/* MIXER MUTE BUTTONS - Mute buttons for each fader. Icon swaps via JS on toggle. */
 .mixer-mute {
   width: 42px;
   height: 42px;
@@ -277,14 +306,14 @@ nav a.active {
   height: 20px;
 }
 
-/* ABOUT */
+/* ABOUT SECTION - Styled similar to the title for continuity*/
 .about {
   background: var(--surface);
   border-radius: 18px;
   padding: 28px;
   text-align: center;
   color: #f5d0e6;
-  font-family: 'Instrument Serif', serif;
+  font-family: Georgia, 'Times New Roman', serif;
   font-style: normal;
   font-size: 1.3rem;
   line-height: 1.7;
@@ -299,9 +328,10 @@ footer {
   text-align: center;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE Resource: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using
+On small screens, scale down the heading and shorten the sliders so nothing overflows */
 @media (max-width: 520px) {
-  header h1 { font-size: 2rem; }
-  .fader { width: 110px; }
-  #volume-slider { width: 55px; }
+  header h1     { font-size: 2rem; }
+  .fader        { width: 110px; }
+  #volume-slider{ width: 55px; }
 }
