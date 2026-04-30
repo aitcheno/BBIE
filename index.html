@@ -10,23 +10,23 @@
 </head>
 <body>
 
-<header>
+<header id="home">
   <h1>Ambient Study Player</h1>
 </header>
 
 <nav>
   <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Music</a></li>
-    <li><a href="#">Playlists</a></li>
-    <li><a href="#">About</a></li>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#player">Music</a></li>
+    <li><a href="#mixer">Mixer</a></li>
+    <li><a href="#about">About</a></li>
   </ul>
 </nav>
 
 <main class="container">
 
   <!-- PLAYER -->
-  <div class="media-player">
+  <div class="media-player" id="player">
     <div class="track-info">Ambient Mix</div>
     <audio id="custom-audio-player" preload="metadata">
       <source src="media/ambient-audio.mp3" type="audio/mpeg">
@@ -49,7 +49,7 @@
   </div>
 
   <!-- MIXER -->
-  <div class="mixer">
+  <div class="mixer" id="mixer">
     <p class="mixer-title">Soundscape Mixer</p>
     <div class="mixer-channels">
 
@@ -96,6 +96,11 @@
     </div>
   </div>
 
+  <!-- ABOUT -->
+  <div class="about" id="about">
+    <p>Find your study flow; layer ambient soundscapes to support deep focus. Let our ambient mix carry you through.</p>
+  </div>
+
 </main>
 
 <audio id="rain-audio" loop><source src="media/lightrain.mp3" type="audio/mpeg"></audio>
@@ -104,8 +109,8 @@
 <audio id="fire-audio" loop><source src="media/fire.mp3" type="audio/mpeg"></audio>
 
 <footer>
-  <p>© 2025 Ambient Study Player</p>
+  <p>© 2026 Ambient Study Player</p>
 </footer>
 
 </body>
-</html>
+</html>>
