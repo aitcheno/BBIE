@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ambient Study Player</title>
-
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
-
 <body>
 
 <header>
@@ -29,92 +27,84 @@
 
   <!-- PLAYER -->
   <div class="media-player">
-
     <div class="track-info">Ambient Mix</div>
-
     <audio id="custom-audio-player" preload="metadata">
       <source src="media/ambient-audio.mp3" type="audio/mpeg">
     </audio>
-
     <div class="custom-controls">
-
       <button id="play-pause-btn">
-        <img id="play-pause-img"
-          src="https://img.icons8.com/ios-glyphs/30/play--v1.png">
+        <img id="play-pause-img" src="https://img.icons8.com/ios-glyphs/30/play--v1.png" alt="Play">
       </button>
-
       <div class="progress-bar">
         <div id="progress-bar-fill"></div>
       </div>
-
       <button id="mute-btn">
-        <img id="mute-icon"
-          src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
+        <img id="mute-icon" src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png" alt="Mute">
       </button>
-
-      <input id="volume-slider" type="range" min="0" max="1" step="0.01">
-
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
       <button id="loop-btn">
-        <img id="loop-icon" src="assets/loop.png">
+        <img id="loop-icon" src="assets/loop.png" alt="Loop">
       </button>
-
     </div>
   </div>
 
   <!-- MIXER -->
   <div class="mixer">
+    <p class="mixer-title">Soundscape Mixer</p>
+    <div class="mixer-channels">
 
-    <div class="channel">
-      <input type="range" class="fader" id="rain" min="0" max="100">
-      <button class="mixer-mute" id="rain-mute">
-        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
-      </button>
+      <div class="channel">
+        <span class="channel-label">Rain</span>
+        <div class="fader-wrap">
+          <input type="range" class="fader" id="rain" min="0" max="100" value="0">
+        </div>
+        <button class="mixer-mute" id="rain-mute">
+          <img src="assets/no-audio.png" alt="Mute">
+        </button>
+      </div>
+
+      <div class="channel">
+        <span class="channel-label">Thunder</span>
+        <div class="fader-wrap">
+          <input type="range" class="fader" id="thunder" min="0" max="100" value="0">
+        </div>
+        <button class="mixer-mute" id="thunder-mute">
+          <img src="assets/no-audio.png" alt="Mute">
+        </button>
+      </div>
+
+      <div class="channel">
+        <span class="channel-label">Brown noise</span>
+        <div class="fader-wrap">
+          <input type="range" class="fader" id="brown" min="0" max="100" value="0">
+        </div>
+        <button class="mixer-mute" id="brown-mute">
+          <img src="assets/no-audio.png" alt="Mute">
+        </button>
+      </div>
+
+      <div class="channel">
+        <span class="channel-label">Fire</span>
+        <div class="fader-wrap">
+          <input type="range" class="fader" id="fire" min="0" max="100" value="0">
+        </div>
+        <button class="mixer-mute" id="fire-mute">
+          <img src="assets/no-audio.png" alt="Mute">
+        </button>
+      </div>
+
     </div>
-
-    <div class="channel">
-      <input type="range" class="fader" id="thunder" min="0" max="100">
-      <button class="mixer-mute" id="thunder-mute">
-        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
-      </button>
-    </div>
-
-    <div class="channel">
-      <input type="range" class="fader" id="brown" min="0" max="100">
-      <button class="mixer-mute" id="brown-mute">
-        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
-      </button>
-    </div>
-
-    <div class="channel">
-      <input type="range" class="fader" id="fire" min="0" max="100">
-      <button class="mixer-mute" id="fire-mute">
-        <img src="https://img.icons8.com/ios-glyphs/30/high-volume--v1.png">
-      </button>
-    </div>
-
   </div>
 
 </main>
 
-<!-- 🔥 FIXED AUDIO SOURCES -->
-<audio id="rain-audio" loop>
-  <source src="media/lightrain.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="thunder-audio" loop>
-  <source src="media/thunderstorm.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="brown-audio" loop>
-  <source src="media/brown-noise.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="fire-audio" loop>
-  <source src="media/fire.mp3" type="audio/mpeg">
-</audio>
+<audio id="rain-audio" loop><source src="media/lightrain.mp3" type="audio/mpeg"></audio>
+<audio id="thunder-audio" loop><source src="media/thunderstorm.mp3" type="audio/mpeg"></audio>
+<audio id="brown-audio" loop><source src="media/brown-noise.mp3" type="audio/mpeg"></audio>
+<audio id="fire-audio" loop><source src="media/fire.mp3" type="audio/mpeg"></audio>
 
 <footer>
-  <p>© 2024 Media Player Website</p>
+  <p>© 2025 Ambient Study Player</p>
 </footer>
 
 </body>

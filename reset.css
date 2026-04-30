@@ -1,6 +1,6 @@
     /* 
     *   Kevin Powell
-    *   https://youtu.be/cCAtD_BAHNw 
+    *   https://youtu.be/cCAtD_BAHNw  
     */
 
     *,
@@ -18,7 +18,7 @@
     html {
     color-scheme: dark light; /* Default dark */
     hanging-punctuation: first last; /* Not supported in Chrome */
-    }
+    } 
 
     body {
     min-height: 100vh;
